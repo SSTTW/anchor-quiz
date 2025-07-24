@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSMC 錨栓安裝教育訓練認證測驗</title>
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #f8f9fa;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --text-color: #333;
+            --border-color: #ddd;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,102,204,0.3);
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--secondary-color);
+        }
+
+        .question h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .option {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .option label {
+            cursor: pointer;
+            flex: 1;
+            font-weight: normal;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .result {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .score {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .pass {
+            color: var(--success-color);
+        }
+
+        .fail {
+            color: var(--danger-color);
+        }
+
+        .student-info {
+            background: var(--secondary-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .error {
+            color: var(--danger-color);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .kuse-branding {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            z-index: 1000;
+        }
+
+        .kuse-branding:hover {
+            color: var(--primary-color);
+        }
+
+        .kuse-branding svg {
+            height: 1.2em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header, .section {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .score {
+                font-size: 2.5rem;
+            }
+
+            .kuse-branding {
+                position: static;
+                justify-content: center;
+                margin-top: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>TSMC 錨栓安裝教育訓練認證測驗</h1>
+            <p>測驗時間：不限時 | 總題數：20題 | 滿分：100分 | 及格標準：90分</p>
+        </div>
+
+        <!-- 登入區塊 -->
+        <div id="loginSection" class="section active">
+            <h2 style="margin-bottom: 20px; color: var(--primary-color);">考生資料登入</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="studentName">考生姓名 *</label>
+                    <input type="text" id="studentName" name="studentName" required>
+                    <div id="nameError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="companyName">公司名稱 *</label>
+                    <input type="text" id="companyName" name="companyName" required>
+                    <div id="companyError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="employeeId">工號 *</label>
+                    <input type="text" id="employeeId" name="employeeId" required>
+                    <div id="employeeError" class="error"></div>
+                </div>
+                <button type="submit" class="btn">開始測驗</button>
+            </form>
+        </div>
+
+        <!-- 測驗區塊 -->
+        <div id="examSection" class="section">
+            <div class="student-info">
+                <strong>考生資訊：</strong>
+                <span id="displayName"></span> | 
+                <span id="displayCompany"></span> | 
+                工號：<span id="displayEmployeeId"></span>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <form id="examForm">
+                <div id="questionsContainer"></div>
+                <button type="submit" class="btn">交卷計分</button>
+            </form>
+        </div>
+
+        <!-- 結果區塊 -->
+        <div id="resultSection" class="section">
+            <div class="result">
+                <h2 style="color: var(--primary-color); margin-bottom: 20px;">測驗結果</h2>
+                <div class="student-info">
+                    <strong>考生資訊：</strong>
+                    <span id="resultName"></span> | 
+                    <span id="resultCompany"></span> | 
+                    工號：<span id="resultEmployeeId"></span>
+                </div>
+                <div class="score" id="finalScore">0</div>
+                <div id="passStatus" style="font-size: 1.5rem; font-weight: bold; margin: 20px 0;"></div>
+                <p style="color: #666; margin-top: 20px;">感謝您完成TSMC錨栓安裝教育訓練認證測驗</p>
+                <button class="btn" onclick="restartExam()" style="margin-top: 20px; max-width: 200px;">重新測驗</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="kuse-branding" onclick="window.open('https://kuse.ai', '_blank')">
+        <span>made with</span>
+        <svg viewBox="0,0,160,44" xmlns="http://www.w3.org/2000/svg"><path d="m.01,20.65C-.43,8.25,9.3-2.03,22.04.34,34.78,2.72,43.29,8.32,43.29,22.9s-8.66,19.01-22.03,20.3C7.9,44.5.46,33.05.01,20.65z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="m146.76,7.94c8.07,0,13.24,6.15,13.24,14.58v1.39h-20.75c.45,4.05,3.51,7.37,8.57,7.37,2.62,0,5.73-1.05,7.62-2.94l2.67,3.83c-2.67,2.55-6.62,3.88-10.9,3.88-8.07,0-14.08-5.6-14.08-14.08,0-7.76,5.67-14.02,13.63-14.02zm0,4.77c-5.01,0-7.29,3.83-7.57,7.1h15.13c-.11-3.16-2.28-7.1-7.57-7.1z" fill="currentColor"/><path d="m86.64,24.49c0,4.15,2.39,6.84,6.84,6.84,4.4,0,6.84-2.69,6.84-6.84V8.55h5.37v16.33c0,6.7-4.06,11.14-12.21,11.14-8.21,0-12.21-4.5-12.21-11.09V8.55h5.37v15.94zm32.99-16.55c4.49,0,8.06,1.47,10.6,3.86l-2.59,3.81c-2.05-2-5.28-3.08-8.06-3.08-2.88,0-4.84,1.37-4.84,3.32,0,1.91,2.64,2.54,5.81,3.27,4.59,1.08,10.26,2.4,10.26,8.46,0,4.94-3.76,8.41-11.14,8.41-4.98,0-8.94-1.76-11.24-4.11l2.54-4.11c1.86,1.91,5.18,3.67,8.84,3.67,3.91,0,5.57-1.66,5.57-3.62,0-2.3-2.88-2.98-6.21-3.76-4.54-1.08-9.87-2.3-9.87-8.06,0-4.5,4.2-8.06,10.31-8.06zM60.79,20.82,71.44,8.55h6.5L66.46,21.26,78.82,35.44h-6.5l-9.28-11.1-2.25,2.49v8.6h-5.33V8.55h5.33v12.27z" fill="currentColor"/></svg>
+    </div>
+
+    <script>
+        // 題目資料
+        const questions = {
+            trueFalse: [
+                { id: 1, question: `化學錨栓清孔是必須的。`, answer: `true` },
+                { id: 2, question: `化學錨栓『不需』等待藥劑凝固即可固定要固定的物品。`, answer: `false` },
+                { id: 3, question: `位移控制型錨栓(內迫式)是依靠外力將膨脹錐敲入,使膨脹錐位移將膨脹片撐開膨脹進而產生力量。`, answer: `true` },
+                { id: 4, question: `自攻切底式錨栓之錨栓可以重複使用,但原有孔洞不行。`, answer: `true` },
+                { id: 5, question: `內政部國土署頒布之新法規自2024年1月1號開始生效。`, answer: `true` },
+                { id: 6, question: `地震中混凝土幾乎到處都會產生開裂。`, answer: `true` },
+                { id: 7, question: `使用錨栓須使用有國際認證測試報告之錨栓。`, answer: `true` },
+                { id: 8, question: `錨栓如果不夠,可以直接到五金行買沒有國際認證或沒有測試報告的錨栓來使用。`, answer: `false` },
+                { id: 9, question: `錨栓失效之鋼材破壞形式主要為施工品質問題,當發生時,為現場施工廠商之施工責任。`, answer: `false` },
+                { id: 10, question: `錨栓安裝之間邊距『不會』對錨栓的破壞模式造成影響。`, answer: `false` }
+            ],
+            multipleChoice: [
+                { 
+                    id: 11, 
+                    question: `錨栓在混凝土的抵抗力,在混凝土開裂影響平均約有多少的折減?`, 
+                    options: [`A.10%`, `B.20%`, `C.30%`, `D.40%`], 
+                    answer: `C` 
+                },
+                { 
+                    id: 12, 
+                    question: `錨栓原廠的安裝說明書『無法』從以下哪種方式獲得?`, 
+                    options: [`A.盒裝上`, `B.手機 APP`, `C.官方網站上`, `D.業主身上`], 
+                    answer: `D` 
+                },
+                { 
+                    id: 13, 
+                    question: `下列何種是判定位移控制型錨栓(內迫式)安裝完成的方式?`, 
+                    options: [`A.十字鋼印`, `B.憑感覺`, `C.業主說的`, `D.固定的東西掉下來`], 
+                    answer: `A` 
+                },
+                { 
+                    id: 14, 
+                    question: `下列何者『不是』位移控制型錨栓埋深及入牙深度的控制方式?`, 
+                    options: [`A.鑽孔深度控制`, `B.螺絲長度控制`, `C.限位鑽頭`, `D.不管他`], 
+                    answer: `D` 
+                },
+                { 
+                    id: 15, 
+                    question: `錨栓安裝鑽孔時,『不需』配戴以下何者?`, 
+                    options: [`A.手機`, `B.護目鏡`, `C.手套`, `D.錨栓`], 
+                    answer: `A` 
+                },
+                { 
+                    id: 16, 
+                    question: `錨栓安裝時,鑽尾的尺寸需使用以下何者?`, 
+                    options: [`A.大於錨栓`, `B.小於錨栓`, `C.等於錨栓`, `D.依照原廠說明書規定`], 
+                    answer: `D` 
+                },
+                { 
+                    id: 17, 
+                    question: `遇到鋼筋阻礙(中鋼筋)造成埋深不足時,以下何者『為非』?`, 
+                    options: [`A.討論其他工法`, `B.向上呈報`, `C.自行切除錨栓長度或洗鋼筋`], 
+                    answer: `C` 
+                },
+                { 
+                    id: 18, 
+                    question: `安裝位移控制型錨栓(內迫式)的手動敲擊棒應為?`, 
+                    options: [`A.五金行隨便買`, `B.原廠敲擊棒`, `C.隨便可以敲擊的工具`], 
+                    answer: `B` 
+                },
+                { 
+                    id: 19, 
+                    question: `下列何者『不是』安裝錨栓的步驟之一?`, 
+                    options: [`A.鑽孔`, `B.清孔`, `C.滑手機`, `D.安裝錨栓`], 
+                    answer: `C` 
+                },
+                { 
+                    id: 20, 
+                    question: `TSMC 廠內規定,錨栓安裝之邊距最小需為幾公分?`, 
+                    options: [`A.5 公分`, `B.10 公分`, `C.1 公分`, `D.都可以`], 
+                    answer: `A` 
+                }
+            ]
+        };
+
+        let studentInfo = {};
+        let currentAnswers = {};
+
+        // 登入表單處理
+        document.getElementById(`loginForm`).addEventListener(`submit`, function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById(`studentName`).value.trim();
+            const company = document.getElementById(`companyName`).value.trim();
+            const employeeId = document.getElementById(`employeeId`).value.trim();
+            
+            // 清除錯誤訊息
+            document.getElementById(`nameError`).textContent = ``;
+            document.getElementById(`companyError`).textContent = ``;
+            document.getElementById(`employeeError`).textContent = ``;
+            
+            let hasError = false;
+            
+            if (!name) {
+                document.getElementById(`nameError`).textContent = `請輸入考生姓名`;
+                hasError = true;
+            }
+            
+            if (!company) {
+                document.getElementById(`companyError`).textContent = `請輸入公司名稱`;
+                hasError = true;
+            }
+            
+            if (!employeeId) {
+                document.getElementById(`employeeError`).textContent = `請輸入工號`;
+                hasError = true;
+            }
+            
+            if (hasError) return;
+            
+            // 儲存學生資訊
+            studentInfo = { name, company, employeeId };
+            
+            // 顯示學生資訊
+            document.getElementById(`displayName`).textContent = name;
+            document.getElementById(`displayCompany`).textContent = company;
+            document.getElementById(`displayEmployeeId`).textContent = employeeId;
+            
+            // 切換到測驗頁面
+            showSection(`examSection`);
+            
+            // 生成題目
+            generateQuestions();
+        });
+
+        // 生成題目
+        function generateQuestions() {
+            const container = document.getElementById(`questionsContainer`);
+            container.innerHTML = ``;
+            
+            // 是非題
+            questions.trueFalse.forEach(q => {
+                const questionDiv = document.createElement(`div`);
+                questionDiv.className = `question`;
+                questionDiv.innerHTML = `
+                    <h3>${q.id}. ${q.question}</h3>
+                    <div class="option">
+                        <input type="radio" id="q${q.id}_true" name="q${q.id}" value="true">
+                        <label for="q${q.id}_true">○</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q${q.id}_false" name="q${q.id}" value="false">
+                        <label for="q${q.id}_false">×</label>
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+            
+            // 選擇題
+            questions.multipleChoice.forEach(q => {
+                const questionDiv = document.createElement(`div`);
+                questionDiv.className = `question`;
+                let optionsHtml = ``;
+                
+                q.options.forEach(option => {
+                    const value = option.charAt(0); // A, B, C, D
+                    optionsHtml += `
+                        <div class="option">
+                            <input type="radio" id="q${q.id}_${value}" name="q${q.id}" value="${value}">
+                            <label for="q${q.id}_${value}">${option}</label>
+                        </div>
+                    `;
+                });
+                
+                questionDiv.innerHTML = `
+                    <h3>${q.id}. ${q.question}</h3>
+                    ${optionsHtml}
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            // 添加答題進度監聽
+            container.addEventListener(`change`, updateProgress);
+        }
+
+        // 更新答題進度
+        function updateProgress() {
+            const totalQuestions = 20;
+            const answeredQuestions = document.querySelectorAll(`input[type="radio"]:checked`).length;
+            const progress = (answeredQuestions / totalQuestions) * 100;
+            document.getElementById(`progressFill`).style.width = progress + `%`;
+        }
+
+        // 測驗表單處理
+        document.getElementById(`examForm`).addEventListener(`submit`, function(e) {
+            e.preventDefault();
+            
+            // 檢查是否所有題目都已作答
+            const totalQuestions = 20;
+            const answeredQuestions = document.querySelectorAll(`input[type="radio"]:checked`).length;
+            
+            if (answeredQuestions < totalQuestions) {
+                alert(`請完成所有題目後再交卷！還有 ${totalQuestions - answeredQuestions} 題未作答。`);
+                return;
+            }
+            
+            // 收集答案
+            currentAnswers = {};
+            document.querySelectorAll(`input[type="radio"]:checked`).forEach(input => {
+                currentAnswers[input.name] = input.value;
+            });
+            
+            // 計算分數
+            calculateScore();
+        });
+
+        // 計算分數
+        function calculateScore() {
+            let score = 0;
+            
+            // 是非題計分
+            questions.trueFalse.forEach(q => {
+                const userAnswer = currentAnswers[`q${q.id}`];
+                if (userAnswer === q.answer) {
+                    score += 5;
+                }
+            });
+            
+            // 選擇題計分
+            questions.multipleChoice.forEach(q => {
+                const userAnswer = currentAnswers[`q${q.id}`];
+                if (userAnswer === q.answer) {
+                    score += 5;
+                }
+            });
+            
+            // 顯示結果
+            showResult(score);
+        }
+
+        // 顯示結果
+        function showResult(score) {
+            // 設定學生資訊
+            document.getElementById(`resultName`).textContent = studentInfo.name;
+            document.getElementById(`resultCompany`).textContent = studentInfo.company;
+            document.getElementById(`resultEmployeeId`).textContent = studentInfo.employeeId;
+            
+            // 設定分數
+            document.getElementById(`finalScore`).textContent = score + ` 分`;
+            
+            // 設定及格狀態
+            const passStatus = document.getElementById(`passStatus`);
+            if (score >= 90) {
+                document.getElementById(`finalScore`).className = `score pass`;
+                passStatus.textContent = `及格`;
+                passStatus.className = `pass`;
+            } else {
+                document.getElementById(`finalScore`).className = `score fail`;
+                passStatus.textContent = `未及格`;
+                passStatus.className = `fail`;
+            }
+            
+            // 切換到結果頁面
+            showSection(`resultSection`);
+        }
+
+        // 切換頁面
+        function showSection(sectionId) {
+            document.querySelectorAll(`.section`).forEach(section => {
+                section.classList.remove(`active`);
+            });
+            document.getElementById(sectionId).classList.add(`active`);
+        }
+
+        // 重新測驗
+        function restartExam() {
+            // 重置表單
+            document.getElementById(`loginForm`).reset();
+            document.getElementById(`examForm`).reset();
+            
+            // 重置變數
+            studentInfo = {};
+            currentAnswers = {};
+            
+            // 重置進度條
+            document.getElementById(`progressFill`).style.width = `0%`;
+            
+            // 回到登入頁面
+            showSection(`loginSection`);
+        }
+    </script>
+
+    <script src="https://cdn.kuse.ai/sdk.prd.js"></script>
+</body>
+</html>
